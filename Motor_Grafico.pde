@@ -41,8 +41,8 @@ class Motor_Grafico {
     
     this.cam_px = 0;
     this.cam_py = 0;
-    this.cam_x = width * 2;
-    this.cam_y = height * 2;
+    this.cam_x = MV_x;
+    this.cam_y = (MV_x * height)/width;
   }
   
   
@@ -101,6 +101,7 @@ class Motor_Grafico {
   void presionar () {
     this.rt_x = (mouseX / (height / this.cam_y)) + this.cam_px;
     this.rt_y = (mouseY / (height / this.cam_y)) + this.cam_py;
+    println("presionado en: " + int(rt_x/100) + "  " + int(rt_y/100));
   }
   
   
@@ -116,7 +117,7 @@ class Motor_Grafico {
     if (keyCode == UP){             //Subir la Cámara
       if (this.cam_py - num >= 0){  
         this.cam_py = this.cam_py - num;
-      } else if (this.cam_py - num < 0){
+      } else {
         this.cam_py = 0;
       }
     }
@@ -124,7 +125,7 @@ class Motor_Grafico {
     if (keyCode == DOWN){    //Bajar la Cámara
       if (this.cam_y + this.cam_py + num <= this.MV_y){
         this.cam_py = this.cam_py + num;
-      } else if (this.cam_y + this.cam_py + num > this.MV_y){ 
+      } else { 
         this.cam_py = this.MV_y - this.cam_y;
       }
     }
@@ -132,7 +133,7 @@ class Motor_Grafico {
     if (keyCode == RIGHT){   //Mover a la Derecha
       if (this.cam_x + this.cam_px + num <= this.MV_x){
         this.cam_px = this.cam_px + num;
-      } else if (this.cam_x + this.cam_px + num > this.MV_x){
+      } else {
         this.cam_px = this.MV_x - this.cam_x;
       }
     }
@@ -140,7 +141,7 @@ class Motor_Grafico {
     if (keyCode == LEFT){    //Mover a la Izquierda
       if (this.cam_px - num >= 0){
         this.cam_px = this.cam_px - num;
-      } else if (this.cam_px - num < 0){
+      } else {
         this.cam_px = 0;
       }
     }
@@ -149,15 +150,15 @@ class Motor_Grafico {
   
   //----------------------------|Subrutina para Zoom|----------------------------//
   //Acercamiento o alejamiento de la cámara según la rueda del ratón
-  void zoom (float movimiento) {
-    float num = sin(3.14159*(incr/10))*60;
-    
+  void zoom (float movimiento) {    
     this.tm_inc = millis();
     if (this.incr <= 9) {
       this.incr = this.incr + 0.5;
     } else if (this.incr == 0) {
       this.incr = 1;
     }
+    
+    float num = sin(3.14159*(incr/10))*60;
     
     if (movimiento < 0) {          //Acercar Cámara (Disminuir tamaño)
       if((this.cam_y > this.MV_y/10) && (this.cam_x > this.MV_x/10)) {
@@ -167,11 +168,12 @@ class Motor_Grafico {
         this.cam_x = this.cam_x - num;
       }
     } else if (movimiento > 0) {   //Alejar Cámara (Agrandar tamaño)
-      if((this.cam_y + this.cam_py < this.MV_y) && (this.cam_x + this.cam_px < this.MV_x)) {
-        this.mov_mg = true;
-        this.imagenes.reajustar();
-        this.cam_y = this.cam_y + num;
-        this.cam_x = this.cam_x + num;
+      if ((this.cam_y + num + this.cam_py < this.MV_y) && (this.cam_x + num + this.cam_px < this.MV_x)) { 
+          println(cam_x + "  " + this.cam_px + "  ");
+          this.mov_mg = true;
+          this.imagenes.reajustar();
+          this.cam_y = this.cam_y + num;
+          this.cam_x = this.cam_x + num;
       }
     } 
   }

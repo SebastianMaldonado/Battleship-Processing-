@@ -102,6 +102,9 @@ class Motor_Grafico {
     this.rt_x = (mouseX / (height / this.cam_y)) + this.cam_px;
     this.rt_y = (mouseY / (height / this.cam_y)) + this.cam_py;
     println("presionado en: " + int(rt_x/100) + "  " + int(rt_y/100));
+    
+    //Prueba
+    jugador.disparar (int(rt_x/100), int(rt_y/100));
   }
   
   

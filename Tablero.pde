@@ -4,7 +4,7 @@ public class Tablero {
         //Mostrar Casillas de Agua
         for (int i = 0; i < 10; i++) {
           for (int j = 0; j < 10; j++) {
-            motor.mostrar("prueba_3", 100 * i, 100 * j, 100, 100);
+            motor.mostrar("agua", 100 * i, 100 * j, 100, 100);
           }
         }
     }

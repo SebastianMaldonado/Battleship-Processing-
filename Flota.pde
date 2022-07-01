@@ -16,12 +16,12 @@ public class Flota {
       
       if (hor) {
         for (int i = 0; i < tam; i++)
-          this.casillas[i] = new Cubierta (x + i, y, "barco-" + tam + "-" + i);
+          this.casillas[i] = new Cubierta (x + i, y, "barco-" + tam + "-" + (i + 1), hor);
         return;
       }
       
       for (int i = 0; i < tam; i++)
-        this.casillas[i] = new Cubierta (x , y + i, "barco-" + tam + "-" + i);
+        this.casillas[i] = new Cubierta (x , y + i, "barco-" + tam + "-" + (i + 1), hor);
     }
     
     private class Cubierta {
@@ -29,7 +29,7 @@ public class Flota {
       String imagen;       //Nombre de la imagen
       int estado;          //[1] buen estado | [2] dañado
       
-      public Cubierta (int x, int y, String imagen) {
+      public Cubierta (int x, int y, String imagen, boolean hor) {
         this.pos_x = x;
         this.pos_y = y;
         this.imagen = imagen;

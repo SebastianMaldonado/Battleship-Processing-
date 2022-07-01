@@ -15,10 +15,40 @@ public class Jugador {
                 this.matrizJ[i][j] = 0;
             }
         }
-        this.barcos = 17;
         this.jug = jug;
     }
-
+    
+    public void disparar (int x, int y) {
+      if (this.matrizB[x][y] == 0) {    //Casilla vacía
+        println("No se encontró barco");
+        return;
+      }
+      
+      //Si hay un barco, indicar qué barco es
+      println("Barco encontrado");
+      this.listB.disparoFlota (x, y, this.matrizB[x][y]);
+    }
+    
+    
+    public void añadirBarco (int x, int y, int tam, boolean hor) {
+      this.barcos += 1;
+      this.listB.addBarcos(x, y, tam, hor);
+      
+      if (hor) {  //Barco horizontal
+        for (int i = 0; i < tam; i++)
+          this.matrizB[x + i][y] = this.barcos;
+        return;
+      }
+      
+      //Barco vertical
+      for (int i = 0; i < tam; i++)
+        this.matrizB[x][y + i] = this.barcos;
+    }
+    
+    
+    
+    
+    
     public void atacar(int x) {
         if (x == 1) {
             System.out.println("Haz encontrado un barco y le has dado con tu misil");
@@ -37,10 +67,10 @@ public class Jugador {
     }
     
     public void temp () {
-      listB.addBarcos(0, 1, 1, false);
-      listB.addBarcos(1, 1, 2, false);
-      listB.addBarcos(2, 1, 3, false);
-      listB.addBarcos(3, 1, 6, false);
+      this.añadirBarco (1, 0, 5, true);
+      this.añadirBarco (1, 1, 5, true);
+      this.añadirBarco (1, 2, 5, true);
+      this.añadirBarco (1, 3, 5, true);
     }
     
     public void iniciarB () {
